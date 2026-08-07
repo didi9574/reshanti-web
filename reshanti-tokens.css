@@ -1,0 +1,33 @@
+/* Reshanti design tokens — source: Figma "Reshanti New Design WEB" / DESIGN SYSTEM page
+   Paste this into any new chat instead of re-reading Figma. */
+:root{
+  /* surfaces */
+  --surface-page:#FAFAFA; --surface-card:#FFF4EA; --surface-section:#F8F3ED;
+  --surface-navbar:#F5EBDD; --surface-light:#DCEFEA; --surface-blush:#F0CABD;
+  --white:#FFFFFF; --black:#121212;
+  /* text */
+  --text-heading:#21342E; --text-body-warm:#603314; --text-low-contrast:#C99A56;
+  --text-meta:#958073; --text-gray-dark:#656565; --text-gray-light:#A19F9F;
+  --number-label:#65877C;
+  /* actions */
+  --button-primary:#1E6B5C; --button-primary-hover:#3EAE9B; --button-secondary:#1F8C5C;
+  --accent-on-cream:#E08868; --accent-on-white:#EC8C38; --accent-icon-warm:#B5703E;
+  --coral-700:#B4552E; --disable:#D1D1D1;
+  /* effects */
+  --effect-glow-mint:#BCFFED;
+  --hairline:rgba(38,33,52,.07); --hairline-dark:rgba(18,18,18,.07);
+  --shadow-mint:drop-shadow(0 0 3.5px rgba(188,255,237,.7));
+  --shadow-pill:drop-shadow(0 1px 1.5px rgba(96,51,20,.08));
+  /* gradients — exact stops */
+  --gradient-section-mint:radial-gradient(120% 150% at 0% 0%,rgba(170,240,209,.26) 0%,#FAFAFA 31%,#FBF7F2 67%,#DCEFEA 100%);
+  --gradient-section-warm:radial-gradient(120% 150% at 0% 0%,rgba(170,240,209,.26) 0%,#FAFAFA 31%,#FAFAFA 67%,#F9E9E0 100%);
+  --gradient-button:linear-gradient(96.81deg,#F0CABD .95%,#EAB3A0 27.89%,#E08868 64.29%);
+  /* type families */
+  --f-display:'Fraunces',serif; --f-body:'Source Sans 3',sans-serif; --f-serif:'Source Serif 4',serif;
+  /* layout */
+  --page:1440px; --content:1080px; --side:180px;
+  /* motion */
+  --motion-quick:200ms; --motion-base:500ms; --motion-slow:800ms; --motion-breath:6s;
+  --ease-calm:cubic-bezier(.22,1,.36,1); --ease-soft:cubic-bezier(.4,0,.2,1);
+  --lift-sm:12px; --lift-md:24px;
+}

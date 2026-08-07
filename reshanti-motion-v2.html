@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reshanti · Homepage Motion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=Source+Sans+3:wght@300;400;500;600&family=Source+Serif+4:opsz,wght@8..60,400&display=swap" rel="stylesheet">
+<style>
+/* ==========================================================
+   TOKENS — pulled from Figma (DESIGN SYSTEM page)
+   ========================================================== */
+:root{
+  /* roles · color */
+  --surface-page:#FAFAFA;
+  --surface-card:#FFF4EA;
+  --surface-section:#F8F3ED;
+  --surface-navbar:#F5EBDD;
+  --surface-light:#DCEFEA;
+  --surface-blush:#F0CABD;
+  --white:#FFFFFF;
+  --black:#121212;
+
+  --text-heading:#21342E;      /* green-900 */
+  --text-body-warm:#603314;    /* brown-900 */
+  --text-low-contrast:#C99A56; /* gold-500 */
+  --text-meta:#958073;
+  --text-gray-dark:#656565;
+  --text-gray-light:#A19F9F;
+  --number-label:#65877C;
+
+  --button-primary:#1E6B5C;
+  --button-primary-hover:#3EAE9B;
+  --button-secondary:#1F8C5C;
+  --accent-on-cream:#E08868;   /* coral-500 */
+  --accent-on-white:#EC8C38;   /* orange-500 */
+  --accent-icon-warm:#B5703E;
+  --coral-700:#B4552E;
+  --disable:#D1D1D1;
+
+  --effect-glow-mint:#BCFFED;
+  --hairline:rgba(38,33,52,0.07);
+  --hairline-dark:rgba(18,18,18,0.07);
+
+  --gradient-section-mint:radial-gradient(120% 150% at 0% 0%,
+      rgba(170,240,209,.26) 0%, #FAFAFA 31%, #FBF7F2 67%, #DCEFEA 100%);
+  --gradient-section-warm:radial-gradient(120% 150% at 0% 0%,
+      rgba(170,240,209,.26) 0%, #FAFAFA 31%, #FAFAFA 67%, #F9E9E0 100%);
+  --gradient-button:linear-gradient(96.81deg,#F0CABD 0.95%,#EAB3A0 27.89%,#E08868 64.29%);
+
+  /* roles · type */
+  --f-display:'Fraunces',Georgia,serif;
+  --f-body:'Source Sans 3',system-ui,sans-serif;
+  --f-serif:'Source Serif 4',Georgia,serif;
+
+  /* layout — 1440 page / 1080 content / 180 side */
+  --page:1440px;
+  --content:1080px;
+  --side:180px;
+
+  /* motion */
+  --motion-quick:200ms;
+  --motion-base:500ms;
+  --motion-slow:800ms;
+  --motion-breath:6s;
+  --ease-calm:cubic-bezier(.22,1,.36,1);
+  --ease-soft:cubic-bezier(.4,0,.2,1);
+  --lift-sm:12px;
+  --lift-md:24px;
+}
+
+/* ==========================================================
+   BASE
+   ========================================================== */
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--f-body);
+  background:var(--surface-page);
+  color:var(--text-body-warm);
+  font-size:15px;line-height:24px;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--button-secondary);outline-offset:3px;border-radius:4px}
+
+/* type scale */
+.h1{font-family:var(--f-display);font-weight:400;font-size:34px;line-height:40px;
+    letter-spacing:-.34px;color:var(--text-heading)}
+.h2{font-family:var(--f-serif);font-weight:400;font-size:15px;line-height:20px}
+.card-h1{font-family:var(--f-display);font-weight:600;font-size:16px;line-height:24px;
+    color:var(--text-heading);font-variation-settings:"SOFT" 0,"WONK" 0}
+.card-h2{font-family:var(--f-body);font-weight:500;font-size:15px;line-height:24px;color:var(--text-heading)}
+.card-body{font-family:var(--f-serif);font-weight:400;font-size:14px;line-height:24px}
+.body-s{font-size:13px;line-height:20px}
+.body-m{font-size:14px;line-height:22px}
+.body-l{font-size:15px;line-height:24px}
+.body-xl{font-size:16px;line-height:24px}
+.num{font-family:var(--f-serif);font-size:15px;line-height:24px;color:var(--number-label)}
+.num-lg{font-family:var(--f-serif);font-size:24px;line-height:28px;color:var(--number-label)}
+
+.wrap{width:var(--content);max-width:calc(100% - 64px);margin:0 auto}
+.section{padding:88px 0}
+.eyebrow{font-family:var(--f-serif);font-size:15px;line-height:20px;
+  color:var(--number-label);margin-bottom:12px}
+.sec-title{margin-bottom:12px}
+.sec-sub{font-size:14px;line-height:22px;color:var(--text-gray-dark);margin-bottom:40px;max-width:620px}
+.sec-sub em{font-style:normal;color:var(--accent-on-cream)}
+.center{text-align:center}
+
+/* ==========================================================
+   BUTTONS — exact Figma geometry
+   ========================================================== */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  font-family:var(--f-body);font-weight:500;
+  border:0.8px solid transparent;border-radius:8px;cursor:pointer;
+  transition:background-color var(--motion-quick) var(--ease-soft),
+             color var(--motion-quick) var(--ease-soft),
+             border-color var(--motion-quick) var(--ease-soft),
+             box-shadow var(--motion-quick) var(--ease-soft),
+             transform var(--motion-quick) var(--ease-soft);
+}
+.btn .arw{transition:transform var(--motion-quick) var(--ease-soft)}
+.btn:hover .arw{transform:translateX(4px)}
+
+/* sizes */
+.btn-m{height:48px;padding:12px 36px;font-size:16px;line-height:24px}
+.btn-s{height:44px;padding:8px 36px;font-size:14px;line-height:18px}
+.btn-nav{height:44px;padding:12px 24px;font-size:14px;line-height:18px}
+.btn-hero{height:44px;padding:8px 32px;font-size:14px;line-height:20px}
+.btn-pill{border-radius:100px;padding:16px 48px;height:auto;font-size:16px;line-height:24px}
+
+/* variants */
+.btn-green{background:var(--button-primary);color:var(--white)}
+.btn-green:hover{background:var(--button-primary-hover);color:var(--surface-page)}
+.btn-coral{background:var(--accent-on-cream);color:var(--white)}
+.btn-coral:hover{background:var(--accent-on-white);color:var(--surface-page)}
+.btn-out-green{border-color:var(--button-secondary);color:var(--button-secondary)}
+.btn-out-green:hover{background:var(--button-secondary);color:var(--white)}
+.btn-out-orange{border-color:var(--accent-on-white);color:var(--accent-on-white)}
+.btn-out-orange:hover{background:var(--accent-on-white);color:var(--white)}
+
+/* ==========================================================
+   NAVBAR — 88px wrap, 1080 inner, blurred cream
+   ========================================================== */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;justify-content:center;
+  background:transparent;border-bottom:0.8px solid transparent;
+  backdrop-filter:none;
+  transition:background-color var(--motion-quick) var(--ease-soft),
+             border-color var(--motion-quick) var(--ease-soft),
+             backdrop-filter var(--motion-quick) var(--ease-soft);
+}
+.nav.scrolled{
+  background:rgba(245,235,221,.46);
+  backdrop-filter:blur(4px);
+  border-bottom-color:var(--hairline);
+}
+.nav-wrap{width:var(--content);max-width:calc(100% - 64px);height:88px;position:relative}
+.nav-wrap .logo{position:absolute;left:0;top:50%;transform:translateY(-50%)}
+.nav-wrap .nav-pills{position:absolute;left:292px;top:20px}
+.nav-wrap .nav-actions{position:absolute;left:891px;top:50%;transform:translateY(-50%)}
+.logo{display:flex;align-items:center;gap:8px;
+  font-family:var(--f-display);font-size:18px;line-height:24px;color:var(--text-heading)}
+.logo .mark{width:34px;height:34px;border-radius:50%;border:1px solid var(--text-heading);position:relative}
+.logo .mark::after{content:'';position:absolute;left:50%;top:54%;transform:translate(-50%,-50%);
+  width:8px;height:8px;border-radius:50%;background:var(--text-heading)}
+
+.nav-pills{position:relative;display:flex;align-items:center;
+  background:var(--surface-navbar);border-radius:30px;padding:4px}
+.nav-pills a{position:relative;z-index:2;
+  font-size:13px;line-height:20px;font-weight:500;color:var(--text-low-contrast);
+  padding:8px 16px;border-radius:24px;white-space:nowrap;
+  transition:color var(--motion-quick) var(--ease-soft),font-weight var(--motion-quick)}
+.nav-pills a.active{color:var(--text-body-warm);font-weight:400}
+.pill-indicator{position:absolute;z-index:1;top:4px;bottom:4px;left:0;will-change:transform,width;
+  background:var(--white);border-radius:24px;
+  filter:drop-shadow(0 1px 1.5px rgba(96,51,20,.08));
+  transition:transform 280ms var(--ease-soft),width 280ms var(--ease-soft)}
+.nav-actions{display:flex;align-items:center;gap:4px}
+.nav-actions .login{color:var(--text-body-warm)}
+.nav-actions .login:hover{color:var(--text-low-contrast)}
+
+/* ==========================================================
+   REVEAL ENGINE
+   ========================================================== */
+[data-reveal]{opacity:0;
+  transition:opacity var(--motion-base) var(--ease-calm),
+             transform var(--motion-base) var(--ease-calm);
+  transition-delay:var(--d,0ms)}
+[data-reveal="up"]{transform:translateY(var(--lift-sm))}
+[data-reveal="up-lg"]{transform:translateY(var(--lift-md))}
+[data-reveal="fade"]{transform:none}
+[data-reveal="scale"]{transform:translateY(var(--lift-md)) scale(.98)}
+[data-reveal].in{opacity:1;transform:none}
+[data-reveal="up-lg"].in,[data-reveal="scale"].in{transition-duration:var(--motion-slow)}
+
+/* ==========================================================
+   HERO
+   ========================================================== */
+.hero{background:var(--gradient-section-mint);padding:152px 0 88px;position:relative;overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+.hero .kicker{font-size:13px;line-height:20px;color:var(--number-label);margin-bottom:14px}
+.hero .h1{margin-bottom:4px}
+.hero .subline{font-family:var(--f-serif);font-size:15px;line-height:20px;
+  color:var(--text-low-contrast);margin-bottom:20px}
+.hero .lede{font-size:14px;line-height:22px;color:var(--text-body-warm);max-width:440px;margin-bottom:24px}
+.trust{display:flex;align-items:center;gap:10px;font-size:13px;line-height:20px;
+  color:var(--text-meta);margin-bottom:22px}
+.trust .dot{width:3px;height:3px;border-radius:50%;background:var(--text-gray-light)}
+.hero .note{font-size:13px;line-height:20px;color:var(--text-meta);margin-top:14px}
+.hero .note b{color:var(--accent-on-cream);font-weight:500}
+
+.stars{display:inline-flex;align-items:center;color:var(--text-low-contrast);font-size:14px}
+.stars i{opacity:0;transform:scale(.7);display:inline-block;font-style:normal;line-height:1;
+  transition:opacity 260ms var(--ease-calm),transform 260ms var(--ease-calm)}
+.stars.in i,.in .stars i{opacity:1;transform:none}
+.stars i:nth-child(1){transition-delay:0ms}
+.stars i:nth-child(2){transition-delay:60ms}
+.stars i:nth-child(3){transition-delay:120ms}
+.stars i:nth-child(4){transition-delay:180ms}
+.stars i:nth-child(5){transition-delay:240ms}
+
+.hero-media{position:relative}
+.hero-media .halo{position:absolute;inset:-26px;border-radius:28px;
+  background:radial-gradient(closest-side,rgba(170,240,209,.5),transparent);
+  animation:breath var(--motion-breath) ease-in-out infinite}
+@keyframes breath{0%,100%{transform:scale(1)}50%{transform:scale(1.03)}}
+.hero-photo{position:relative;border-radius:16px;overflow:hidden;aspect-ratio:16/11;
+  background:linear-gradient(140deg,#C9D9CE,#E7D3C4 55%,#D9C3B4);
+  border:0.8px solid var(--hairline)}
+.hero-photo .ph{position:absolute;left:16px;bottom:14px;font-size:11px;line-height:12px;
+  letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.85)}
+.play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:52px;height:52px;border-radius:50%;border:none;cursor:pointer;
+  background:rgba(255,255,255,.92);display:grid;place-items:center;
+  transition:transform var(--motion-quick) var(--ease-soft)}
+.play::before{content:'';position:absolute;inset:0;border-radius:50%;
+  border:2px solid rgba(255,255,255,.75);animation:pulse 2.6s var(--ease-calm) infinite}
+.play:hover{transform:translate(-50%,-50%) scale(1.08)}
+.play:hover::before{animation-play-state:paused;opacity:0}
+.play span{width:0;height:0;margin-left:4px;
+  border-left:12px solid var(--button-primary);
+  border-top:7px solid transparent;border-bottom:7px solid transparent}
+@keyframes pulse{0%{transform:scale(1);opacity:.9}70%,100%{transform:scale(1.45);opacity:0}}
+
+/* ==========================================================
+   BENEFITS
+   ========================================================== */
+.benefit-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.b-card{background:var(--white);border:0.8px solid var(--hairline);border-radius:16px;
+  padding:24px 20px;text-align:center;
+  transition:transform var(--motion-quick) var(--ease-soft),
+             box-shadow var(--motion-quick) var(--ease-soft)}
+.b-card:hover{transform:translateY(-4px);box-shadow:0 12px 26px rgba(33,52,46,.07)}
+.b-icon{width:20px;height:20px;margin:0 auto 14px;transform:rotate(12deg);
+  transition:transform 700ms var(--ease-calm)}
+.b-card.in .b-icon{transform:rotate(0)}
+.b-card:hover .b-icon{transform:rotate(0) scale(1.12);transition-duration:var(--motion-quick)}
+.b-card h3{margin-bottom:8px}
+.b-card p{font-size:13px;line-height:20px;color:var(--text-gray-dark)}
+
+/* ==========================================================
+   TEACHER CARDS — 263 × 539, radius 16, photo 326
+   ========================================================== */
+.t-grid{display:grid;grid-template-columns:repeat(4,263px);justify-content:space-between;
+  gap:0;margin-bottom:36px}
+.t-card{width:263px;background:var(--white);border:0.8px solid var(--hairline);
+  border-radius:16px;padding:24px 12px;display:flex;flex-direction:column;gap:12px;
+  transition:transform var(--motion-quick) var(--ease-soft),
+             box-shadow var(--motion-quick) var(--ease-soft)}
+.t-card:hover{transform:translateY(-6px);box-shadow:0 14px 30px rgba(33,52,46,.09)}
+.t-photo{position:relative;height:326px;border-radius:12px;overflow:hidden;
+  background:linear-gradient(150deg,#BFD3C4,#DCC8B6 60%,#C9B49F)}
+.t-photo .inner{position:absolute;inset:0;background:inherit;
+  transition:transform 420ms var(--ease-soft)}
+.t-card:hover .t-photo .inner{transform:scale(1.05)}
+.ryt{position:absolute;top:10px;left:9.6px;z-index:2;
+  width:32px;height:17px;border-radius:12px;background:var(--surface-section);
+  display:grid;place-items:center;
+  font-size:10px;line-height:12px;font-weight:500;color:var(--button-primary-hover)}
+.t-row{display:flex;align-items:center;justify-content:space-between}
+.free-pill{width:107px;height:24px;border-radius:20px;background:var(--surface-light);
+  display:grid;place-items:center;
+  font-size:10px;line-height:12px;font-weight:500;color:var(--text-heading);
+  transition:transform var(--motion-quick) var(--ease-soft)}
+.t-card:hover .free-pill{transform:scale(1.05)}
+.t-meta{font-size:13px;line-height:20px;color:var(--text-gray-dark)}
+.t-foot{display:flex;align-items:center;justify-content:space-between}
+.price{font-family:var(--f-serif);font-size:15px;line-height:24px;color:var(--text-heading)}
+.price span{font-size:12px;line-height:16px;color:var(--number-label)}
+.t-foot .btn{width:130px;padding:8px 0}
+.after-note{font-size:13px;line-height:20px;color:var(--text-meta);margin-top:12px}
+
+/* ==========================================================
+   HOW IT WORKS
+   ========================================================== */
+.how{background:var(--gradient-section-warm)}
+.how .wrap{text-align:center}
+.how .sec-title{margin-left:auto;margin-right:auto}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin:48px 0 44px}
+.step{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center}
+.node{position:relative;margin-bottom:22px;width:34px;height:34px;border-radius:50%;flex:none;
+  display:grid;place-items:center;font-family:var(--f-serif);font-size:15px;line-height:24px;
+  background:var(--white);color:var(--number-label);border:0.8px solid var(--hairline);
+  transform:scale(.82);opacity:0;
+  transition:transform 420ms var(--ease-calm),opacity 420ms var(--ease-calm),
+             background-color 420ms var(--ease-calm),color 420ms var(--ease-calm),
+             border-color 420ms var(--ease-calm)}
+.step.lit .node{transform:scale(1);opacity:1;border-color:var(--button-secondary);color:var(--text-heading)}
+.step:last-child.lit .node{background:var(--accent-on-cream);border-color:var(--accent-on-cream);color:var(--white)}
+.node svg{width:15px;height:15px}
+.node svg path{stroke:var(--white);stroke-width:2.4;fill:none;stroke-linecap:round;stroke-linejoin:round;
+  stroke-dasharray:22;stroke-dashoffset:22;transition:stroke-dashoffset 500ms var(--ease-calm) 180ms}
+.step:last-child.lit .node svg path{stroke-dashoffset:0}
+.rail{position:absolute;top:17px;left:calc(50% + 17px);width:calc(100% - 6px);height:1px;
+  background:var(--text-low-contrast);opacity:.45;
+  transform:scaleX(0);transform-origin:left center;
+  transition:transform 600ms var(--ease-calm)}
+.step.drawn .rail{transform:scaleX(1)}
+.step:last-child .rail{display:none}
+.step h3{margin-bottom:6px}
+.step p{font-size:13px;line-height:20px;color:var(--text-gray-dark);max-width:260px}
+
+/* ==========================================================
+   TESTIMONIALS — highlight sweep
+   ========================================================== */
+.q-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.q-card{background:var(--white);border:0.8px solid var(--hairline);border-radius:16px;padding:20px 18px}
+.q-head{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.avatar{width:26px;height:26px;border-radius:50%;background:var(--surface-blush);
+  color:var(--coral-700);display:grid;place-items:center;font-size:11px;font-weight:500}
+.q-name{font-size:13px;line-height:20px;font-weight:500;color:var(--text-heading);flex:1}
+.q-mark{font-family:var(--f-display);font-size:30px;line-height:1;
+  color:var(--button-primary-hover);display:block;height:20px;margin-bottom:6px}
+.q-card p{font-family:var(--f-serif);font-size:14px;line-height:24px;color:var(--text-body-warm)}
+
+.hl{
+  background-image:linear-gradient(rgba(188,255,237,.40),rgba(188,255,237,.40));
+  background-repeat:no-repeat;background-size:0% 100%;background-position:left center;
+  border-radius:3px;padding:1px 2px;margin:0 -2px;
+  transition:background-size 1100ms var(--ease-calm);
+  transition-delay:var(--hld,300ms);
+}
+.q-card.in .hl{background-size:100% 100%}
+.hl.warm{background-image:linear-gradient(rgba(224,136,104,.30),rgba(224,136,104,.30))}
+
+/* ==========================================================
+   TWO WAYS — 532 cards, radius 20, px48 py32
+   ========================================================== */
+/* 532 × auto · radius 20 · px48 py32 · gap32 · inner gap24 */
+.way-grid{display:grid;grid-template-columns:repeat(2,532px);justify-content:space-between;gap:16px}
+.way{width:532px;border-radius:20px;padding:32px 48px;
+  display:flex;flex-direction:column;gap:32px;justify-content:center;
+  border:0.8px solid transparent;
+  transition:transform var(--motion-quick) var(--ease-soft),
+             box-shadow var(--motion-quick) var(--ease-soft)}
+.way-body{display:flex;flex-direction:column;gap:24px}
+.way-head{height:60px;width:436px}
+.way-single{background:var(--surface-card)}
+.way-single:hover{transform:translateY(-4px);box-shadow:0 12px 28px rgba(180,85,46,.10)}
+.way-weekly{background:var(--white);border:1px solid var(--hairline-dark);
+  filter:drop-shadow(0 0 3.5px rgba(188,255,237,.7))}
+.way-weekly:hover{transform:translateY(-4px);box-shadow:0 12px 28px rgba(30,107,92,.12)}
+.way .tag{font-family:var(--f-serif);font-size:14px;line-height:24px;margin-bottom:4px}
+.way-single .tag{color:var(--button-secondary)}
+.way-weekly .tag{color:var(--accent-on-cream)}
+.way ul{list-style:disc;padding-left:22.5px;width:100%}
+.way li{font-size:15px;line-height:24px;color:var(--text-heading);
+  opacity:0;transform:translateY(8px);
+  transition:opacity 360ms var(--ease-calm),transform 360ms var(--ease-calm)}
+.way.in li{opacity:1;transform:none}
+.way li:nth-child(1){transition-delay:240ms}
+.way li:nth-child(2){transition-delay:300ms}
+.way li:nth-child(3){transition-delay:360ms}
+.way li:nth-child(4){transition-delay:420ms}
+
+/* ==========================================================
+   COMPARISON
+   ========================================================== */
+.compare{background:var(--white)}
+.table-wrap{position:relative}
+.col-glow{position:absolute;top:0;bottom:0;left:0;width:0;border-radius:12px;
+  background:linear-gradient(180deg,rgba(220,239,234,.9),rgba(220,239,234,.32));
+  transform:scaleY(0);transform-origin:bottom center;
+  transition:transform 560ms var(--ease-calm)}
+.col-glow.in{transform:scaleY(1)}
+table{width:100%;border-collapse:collapse;position:relative;z-index:2}
+th,td{text-align:left;padding:12px 16px;font-size:14px;line-height:22px}
+thead th{font-family:var(--f-serif);font-size:12px;line-height:16px;color:var(--text-meta);padding-bottom:16px}
+thead th:nth-child(2){color:var(--button-primary);font-size:14px}
+tbody tr{border-bottom:0.8px solid var(--hairline)}
+tbody td:first-child{color:var(--text-body-warm)}
+.yes{color:var(--button-secondary);display:inline-flex;align-items:center;gap:6px}
+.no{color:var(--text-gray-dark);display:inline-flex;align-items:center;gap:6px}
+.tick{width:12px;height:12px;flex:none}
+.tick path{stroke:var(--button-secondary);stroke-width:2.6;fill:none;
+  stroke-linecap:round;stroke-linejoin:round;
+  stroke-dasharray:20;stroke-dashoffset:20;transition:stroke-dashoffset 420ms var(--ease-calm)}
+tr.lit .tick path{stroke-dashoffset:0}
+td.reshanti .yes{opacity:0;transition:opacity 320ms var(--ease-calm)}
+tr.lit td.reshanti .yes{opacity:1}
+td.other{opacity:0;transition:opacity 420ms var(--ease-calm)}
+.table-wrap.in td.other{opacity:1}
+
+/* ==========================================================
+   RECRUIT
+   ========================================================== */
+.recruit-grid{display:grid;grid-template-columns:1fr 1.05fr;border-radius:20px;overflow:hidden}
+.recruit-photo{background:linear-gradient(150deg,#D8CFC2,#C2A995 60%,#B39781);min-height:420px;
+  transform:translateX(-16px);opacity:0;
+  transition:transform var(--motion-slow) var(--ease-calm),opacity var(--motion-slow) var(--ease-calm)}
+.recruit-grid.in .recruit-photo{transform:none;opacity:1}
+.recruit-panel{background:linear-gradient(150deg,var(--button-primary),var(--text-heading));
+  color:var(--surface-section);padding:40px;
+  transform:translateX(16px);opacity:0;
+  transition:transform var(--motion-slow) var(--ease-calm),opacity var(--motion-slow) var(--ease-calm)}
+.recruit-grid.in .recruit-panel{transform:none;opacity:1}
+.recruit-panel .small{font-family:var(--f-serif);font-size:14px;line-height:24px;color:var(--surface-blush)}
+.recruit-panel .h1{color:var(--white);margin-bottom:14px}
+.recruit-panel > p{font-size:14px;line-height:22px;opacity:.86;margin-bottom:22px;max-width:400px}
+.recruit-panel ul{list-style:none;margin-bottom:24px}
+.recruit-panel li{font-size:14px;line-height:22px;padding-left:24px;position:relative;margin-bottom:10px;
+  opacity:0;transform:translateY(8px);
+  transition:opacity 360ms var(--ease-calm),transform 360ms var(--ease-calm)}
+.recruit-grid.in li{opacity:1;transform:none}
+.recruit-panel li:nth-child(1){transition-delay:420ms}
+.recruit-panel li:nth-child(2){transition-delay:500ms}
+.recruit-panel li:nth-child(3){transition-delay:580ms}
+.recruit-panel li:nth-child(4){transition-delay:660ms}
+.recruit-panel li:nth-child(5){transition-delay:740ms}
+.recruit-panel li::before{content:'✓';position:absolute;left:0;top:0;
+  color:var(--effect-glow-mint);font-size:12px}
+.badge{background:var(--gradient-button);border-radius:12px;padding:16px 20px;text-align:center;
+  opacity:0;transform:scale(.92);
+  transition:opacity 460ms var(--ease-calm) 820ms,transform 460ms var(--ease-calm) 820ms}
+.recruit-grid.in .badge{opacity:1;transform:none}
+.badge .pct{font-family:var(--f-serif);font-size:24px;line-height:28px;color:var(--text-heading)}
+.badge .lbl{font-size:13px;line-height:20px;color:var(--text-body-warm);margin-bottom:12px}
+.badge .btn{width:100%}
+
+/* ==========================================================
+   FAQ — 76px rows, radius 12
+   ========================================================== */
+.faq-item{border-radius:12px;overflow:hidden;margin-bottom:4px;
+  transition:background-color var(--motion-quick) var(--ease-soft)}
+.faq-item:hover,.faq-item.open{background:var(--surface-section)}
+.faq-q{width:100%;background:transparent;border:none;cursor:pointer;text-align:left;
+  display:flex;align-items:flex-start;justify-content:space-between;gap:24px;
+  padding:16px 32px;font-family:var(--f-body)}
+.faq-q h3{font-family:var(--f-serif);font-weight:400;font-size:15px;line-height:20px;color:var(--black)}
+.faq-q p{font-size:14px;line-height:22px;color:var(--number-label);margin-top:4px}
+.faq-plus{flex:none;font-family:var(--f-display);font-size:34px;line-height:40px;
+  letter-spacing:-.34px;color:var(--accent-on-cream);
+  transition:transform 250ms var(--ease-soft),color 250ms var(--ease-soft)}
+.faq-item.open .faq-plus{transform:rotate(45deg);color:var(--accent-on-white)}
+.faq-a{display:grid;grid-template-rows:0fr;transition:grid-template-rows 350ms var(--ease-soft)}
+.faq-item.open .faq-a{grid-template-rows:1fr}
+.faq-a > div{overflow:hidden}
+.faq-a .inner{font-size:14px;line-height:22px;color:var(--text-gray-dark);padding:0 32px 20px;max-width:760px}
+
+/* ==========================================================
+   FINAL CTA
+   ========================================================== */
+.final{background:var(--gradient-section-warm);padding:96px 0 104px;text-align:center;
+  position:relative;overflow:hidden}
+.final .glow{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:640px;height:340px;border-radius:50%;
+  background:radial-gradient(closest-side,rgba(188,255,237,.55),transparent);
+  animation:breath var(--motion-breath) ease-in-out infinite}
+.final .inner{position:relative;z-index:2}
+.final .h1{max-width:520px;margin:0 auto 12px}
+.final p{font-size:14px;line-height:22px;color:var(--text-gray-dark);margin-bottom:28px}
+.final .btn.pulsed{animation:oneshot 1400ms var(--ease-calm) 1 forwards}
+@keyframes oneshot{0%{box-shadow:0 0 0 0 rgba(224,136,104,.45)}100%{box-shadow:0 0 0 22px rgba(224,136,104,0)}}
+
+/* ==========================================================
+   FOOTER — 386 tall, 1080 inner
+   ========================================================== */
+footer{background:var(--text-heading);padding:45px 0}
+.f-inner{width:var(--content);max-width:calc(100% - 64px);margin:0 auto}
+.f-grid{display:grid;grid-template-columns:3fr 1fr 1fr 1fr;column-gap:28px;margin-bottom:32px}
+.f-brand .name{font-family:var(--f-display);font-size:18px;line-height:24px;color:var(--surface-navbar);margin-bottom:12px}
+.f-brand p{font-size:13px;line-height:20px;color:var(--text-gray-light);max-width:349px}
+.f-col h4{font-family:var(--f-serif);font-weight:400;font-size:12px;line-height:16px;
+  color:var(--text-low-contrast);margin-bottom:16px}
+.f-col a{display:block;font-size:14px;line-height:22px;color:var(--surface-section);margin-bottom:8px;
+  transition:color var(--motion-quick) var(--ease-soft)}
+.f-col a:hover{color:var(--accent-on-cream)}
+.f-social{display:flex;gap:12px;justify-content:flex-end;margin-bottom:20px}
+.f-social span{width:24px;height:24px;border-radius:5px;background:var(--surface-section);opacity:.85}
+.f-bot{border-top:0.8px solid var(--text-meta);padding-top:22px;
+  display:flex;justify-content:space-between;
+  font-family:var(--f-serif);font-size:12px;line-height:16px;color:var(--text-meta)}
+
+/* ==========================================================
+   REVIEW PANEL (prototype tool only)
+   ========================================================== */
+.panel{position:fixed;right:16px;bottom:16px;z-index:200;
+  background:rgba(33,52,46,.94);color:#fff;border-radius:10px;padding:10px 12px;
+  display:flex;gap:8px;align-items:center;font-size:12px;
+  box-shadow:0 8px 24px rgba(0,0,0,.2);backdrop-filter:blur(8px)}
+.panel button{background:rgba(255,255,255,.12);color:#fff;border:none;border-radius:6px;
+  padding:6px 10px;font-size:12px;font-family:var(--f-body);cursor:pointer;transition:background-color 160ms}
+.panel button:hover{background:rgba(255,255,255,.24)}
+.panel button.on{background:var(--accent-on-cream)}
+.panel .lbl{opacity:.5}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;
+    transition-duration:150ms!important}
+  [data-reveal]{transform:none!important}
+}
+body.calm *,body.calm *::before,body.calm *::after{
+  animation:none!important;transition-duration:150ms!important;transition-delay:0ms!important}
+body.calm [data-reveal]{transform:none!important}
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <div class="nav-wrap">
+    <a class="logo" href="#"><span class="mark"></span>Reshanti</a>
+    <div class="nav-pills" id="navPills">
+      <span class="pill-indicator" id="pillInd"></span>
+      <a href="#teachers" class="active">Find a teacher</a>
+      <a href="#recruit">Join us as a teacher</a>
+      <a href="#benefits">About us</a>
+      <a href="#testi">Blog</a>
+      <a href="#faq">Contact us</a>
+    </div>
+    <div class="nav-actions">
+      <a class="btn btn-nav login" href="#">Log in</a>
+      <a class="btn btn-nav btn-coral" href="#">Sign up</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <p class="kicker" data-reveal="up" style="--d:0ms">Live 1-on-1 yoga, with a real teacher</p>
+      <h1 class="h1" data-reveal="up" style="--d:150ms">Find Your Online Yoga Teacher</h1>
+      <p class="subline" data-reveal="fade" style="--d:300ms">Live 1 on 1 Classes</p>
+      <p class="lede" data-reveal="up" style="--d:400ms">Choose your teacher based on your language, yoga style, and budget. Browse certified online yoga teachers worldwide and book a session whenever you want, or practice weekly with the same teacher.</p>
+      <div class="trust" data-reveal="up" style="--d:550ms">
+        <span>30+ Certified Teachers</span><span class="dot"></span>
+        <span class="stars"><i>★</i><i>★</i><i>★</i><i>★</i><i>★</i></span><span>4.9 Average</span>
+      </div>
+      <a class="btn btn-hero btn-green" href="#teachers" data-reveal="up" style="--d:700ms">Find my teacher</a>
+      <p class="note" data-reveal="fade" style="--d:850ms">No subscription · <b>first session free</b> with most teachers</p>
+    </div>
+    <div class="hero-media" data-reveal="scale" style="--d:200ms">
+      <div class="halo"></div>
+      <div class="hero-photo"><span class="ph">hero image</span>
+        <button class="play" aria-label="Play intro"><span></span></button></div>
+    </div>
+  </div>
+</header>
+
+<section class="section" id="benefits">
+  <div class="wrap">
+    <p class="eyebrow" data-reveal="up">Why students choose Reshanti</p>
+    <h2 class="h1 sec-title" data-reveal="up" style="--d:80ms">You choose the teacher. Every time.</h2>
+    <div class="benefit-grid" style="margin-top:32px">
+      <article class="b-card" data-reveal="up" style="--d:0ms">
+        <svg class="b-icon" viewBox="0 0 24 24" fill="none"><path d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9Z" stroke="#1E6B5C" stroke-width="1.5"/></svg>
+        <h3 class="card-h2">Choose your own teacher</h3>
+        <p>Browse teachers by style, language, availability, and price. Choose who feels right for you.</p>
+      </article>
+      <article class="b-card" data-reveal="up" style="--d:80ms">
+        <svg class="b-icon" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8.5" stroke="#B5703E" stroke-width="1.5"/><path d="M12 7.5V12l3 2" stroke="#B5703E" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <h3 class="card-h2">Book when it suits you</h3>
+        <p>Book a session when you have an hour, or keep the same teacher every week. Switch anytime.</p>
+      </article>
+      <article class="b-card" data-reveal="up" style="--d:160ms">
+        <svg class="b-icon" viewBox="0 0 24 24" fill="none"><path d="M12 3.5 20 12l-8 8.5L4 12l8-8.5Z" stroke="#1F8C5C" stroke-width="1.5" stroke-linejoin="round"/><circle cx="12" cy="12" r="2.4" fill="#1F8C5C"/></svg>
+        <h3 class="card-h2">Live 1-on-1, personalized for you</h3>
+        <p>Your teacher sees you live, adapts the practice to your needs, and guides you in real time.</p>
+      </article>
+      <article class="b-card" data-reveal="up" style="--d:240ms">
+        <svg class="b-icon" viewBox="0 0 24 24" fill="none"><path d="M12 3.5 20.5 12 12 20.5 3.5 12 12 3.5Z" stroke="#E08868" stroke-width="1.5" stroke-linejoin="round"/></svg>
+        <h3 class="card-h2">No subscription required</h3>
+        <p>Pay per session. First session free with most teachers. No commitment, ever.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="teachers" style="padding-top:0">
+  <div class="wrap">
+    <p class="eyebrow" data-reveal="up">Explore teachers</p>
+    <h2 class="h1 sec-title" data-reveal="up" style="--d:80ms">Independent teachers from around the world</h2>
+    <p class="sec-sub" data-reveal="up" style="--d:160ms">Filter by yoga style, language, level, and price. <em>You choose.</em></p>
+    <div class="t-grid" id="tGrid"></div>
+    <div class="center">
+      <a class="btn btn-m btn-out-orange" href="#" data-reveal="up">Browse all teachers <span class="arw">→</span></a>
+      <p class="after-note" data-reveal="fade" style="--d:120ms">30+ teachers from around the world</p>
+    </div>
+  </div>
+</section>
+
+<section class="section how" id="how">
+  <div class="wrap">
+    <p class="eyebrow" data-reveal="up">How it works</p>
+    <h2 class="h1 sec-title" data-reveal="up" style="--d:80ms">Your first session is only<br>three steps away</h2>
+    <div class="steps" id="steps">
+      <div class="step"><span class="node">01</span><span class="rail"></span>
+        <h3 class="card-h2">Find your teacher</h3>
+        <p>Browse by language, style, budget, and availability. Choose the one that feels right for you.</p></div>
+      <div class="step"><span class="node">02</span><span class="rail"></span>
+        <h3 class="card-h2">Pick a time this week</h3>
+        <p>See your teacher's live calendar and choose a time that fits your schedule.</p></div>
+      <div class="step"><span class="node"><svg viewBox="0 0 24 24"><path d="M5 12.5 10 17.5 19 7"/></svg></span>
+        <h3 class="card-h2">Meet your teacher</h3>
+        <p>Once your teacher confirms, you'll get a video link. Open it and join your live session.</p></div>
+    </div>
+    <div class="center">
+      <a class="btn btn-pill btn-green" href="#" id="howCta" style="opacity:0;transition:opacity 500ms var(--ease-calm)">Start with a free session <span class="arw">→</span></a>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="testi">
+  <div class="wrap">
+    <p class="eyebrow" data-reveal="up">What students say</p>
+    <h2 class="h1 sec-title" data-reveal="up" style="--d:80ms">Real sessions, real progress</h2>
+    <div class="q-grid" style="margin-top:32px">
+      <article class="q-card" data-reveal="up" style="--d:0ms">
+        <div class="q-head"><span class="avatar">K</span><span class="q-name">Khatereh Z.</span>
+          <span class="stars"><i>★</i><i>★</i><i>★</i><i>★</i><i>★</i></span></div>
+        <span class="q-mark">“</span>
+        <p>I'm kind of a beginner to yoga, so I was a little nervous before my class. But Katherine made me feel comfortable right away, and the whole session was <span class="hl" style="--hld:400ms">so calm and relaxing</span>.</p>
+      </article>
+      <article class="q-card" data-reveal="up" style="--d:100ms">
+        <div class="q-head"><span class="avatar">M</span><span class="q-name">Mira A.</span>
+          <span class="stars"><i>★</i><i>★</i><i>★</i><i>★</i><i>★</i></span></div>
+        <span class="q-mark">“</span>
+        <p>I had been under a lot of pressure from work and life, and never making time for myself. I had tried YouTube videos before, but the private session felt different. I felt <span class="hl" style="--hld:500ms">much lighter and calmer</span>.</p>
+      </article>
+      <article class="q-card" data-reveal="up" style="--d:200ms">
+        <div class="q-head"><span class="avatar">S</span><span class="q-name">Shamin S.</span>
+          <span class="stars"><i>★</i><i>★</i><i>★</i><i>★</i><i>★</i></span></div>
+        <span class="q-mark">“</span>
+        <p>I booked a session with Mahsa because I was always <span class="hl warm" style="--hld:600ms">taking care of everyone else</span> and never making time for myself. I felt supported, seen, and genuinely cared for.</p>
+      </article>
+      <article class="q-card" data-reveal="up" style="--d:300ms">
+        <div class="q-head"><span class="avatar">V</span><span class="q-name">Veronica R.</span>
+          <span class="stars"><i>★</i><i>★</i><i>★</i><i>★</i><i>★</i></span></div>
+        <span class="q-mark">“</span>
+        <p>Ekta was very kind and made me feel comfortable and secure during the first class. She <span class="hl" style="--hld:700ms">listened to my needs</span> and adapted the class to my limits.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="ways">
+  <div class="wrap">
+    <p class="eyebrow" data-reveal="up">Two ways to practice</p>
+    <h2 class="h1 sec-title" data-reveal="up" style="--d:80ms">Practice your way, on Reshanti</h2>
+    <div class="way-grid" style="margin-top:32px">
+      <article class="way way-single" data-reveal="up-lg" style="--d:0ms">
+        <div class="way-body">
+          <div class="way-head">
+            <p class="tag">Single session</p>
+            <p class="card-h1">Book when you have a free hour</p>
+          </div>
+          <ul>
+            <li>No recurring plan required</li><li>Book any teacher, any available time</li>
+            <li>Perfect for trying Reshanti first</li><li>Ideal for unpredictable schedules</li>
+          </ul>
+        </div>
+        <a class="btn btn-m btn-out-green" href="#" style="align-self:flex-start">Find a teacher this week <span class="arw">→</span></a>
+      </article>
+      <article class="way way-weekly" data-reveal="up-lg" style="--d:150ms">
+        <div class="way-body">
+          <div class="way-head">
+            <p class="tag">Weekly session</p>
+            <p class="card-h1">Same teacher, Same time, Every week</p>
+          </div>
+          <ul>
+            <li>Your recurring slot, reserved for you</li><li>Teacher who knows your progress</li>
+            <li>Real accountability</li><li>Cancel or pause anytime</li>
+          </ul>
+        </div>
+        <a class="btn btn-m btn-coral" href="#" style="align-self:flex-start">Find my weekly teacher <span class="arw">→</span></a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section compare" id="compare">
+  <div class="wrap">
+    <p class="eyebrow" data-reveal="up">Reshanti vs the alternatives</p>
+    <h2 class="h1 sec-title" data-reveal="up" style="--d:80ms">How we compare to what<br>you're probably considering</h2>
+    <div class="table-wrap" id="tableWrap" style="margin-top:32px">
+      <div class="col-glow" id="colGlow"></div>
+      <table><thead><tr><th>Feature</th><th>Reshanti</th><th>YouTube &amp; Apps</th><th>Subscription Platforms</th></tr></thead>
+      <tbody id="cmpBody"></tbody></table>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="recruit">
+  <div class="wrap">
+    <div class="recruit-grid" id="recruitGrid">
+      <div class="recruit-photo"></div>
+      <div class="recruit-panel">
+        <p class="small">Join Reshanti as an</p>
+        <p class="h1">Independent Yoga Teacher</p>
+        <p>Set your own prices, schedule, and style. We handle bookings and payments. You focus on teaching.</p>
+        <ul>
+          <li>Set your own price per session</li><li>Teach in your own language and style</li>
+          <li>First 3 classes commission-free</li><li>Get paid securely after every session</li>
+          <li>Build a recurring student base online</li>
+        </ul>
+        <div class="badge">
+          <div class="pct">0%</div>
+          <div class="lbl">Commission on your first 3 sessions</div>
+          <a class="btn btn-m btn-coral" href="#">Join as a teacher <span class="arw">→</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="faq">
+  <div class="wrap">
+    <p class="eyebrow" data-reveal="up">Still have questions?</p>
+    <h2 class="h1 sec-title" data-reveal="up" style="--d:80ms">Everything you need to know</h2>
+    <div id="faqList" style="margin-top:28px"></div>
+  </div>
+</section>
+
+<section class="final" id="final">
+  <div class="glow"></div>
+  <div class="wrap inner">
+    <p class="h1" data-reveal="up" style="--d:0ms">Your yoga journey starts with the right teacher</p>
+    <p data-reveal="up" style="--d:200ms">Browse teachers by language, yoga style, budget, and availability. Find the one that's right for you.</p>
+    <a class="btn btn-pill btn-coral" href="#teachers" id="finalCta" data-reveal="up" style="--d:380ms">Find my teacher <span class="arw">→</span></a>
+  </div>
+</section>
+
+<footer>
+  <div class="f-inner">
+    <div class="f-grid">
+      <div class="f-brand">
+        <div class="name">Reshanti</div>
+        <p>The only online yoga marketplace where you choose your teacher, your style, and your schedule, one session at a time.</p>
+      </div>
+      <div class="f-col"><h4>For Students</h4>
+        <a href="#">Find a Teacher</a><a href="#">Book a Single Session</a><a href="#">Weekly Commitment</a><a href="#">Yoga for Stress</a><a href="#">Yoga for Burnout</a></div>
+      <div class="f-col"><h4>For Teachers</h4>
+        <a href="#">Teach on Reshanti</a><a href="#">Teacher Login</a><a href="#">How Commissions Work</a></div>
+      <div class="f-col"><h4>Support</h4>
+        <a href="#">FAQ</a><a href="#">Contact Us</a><a href="#">Privacy Policy</a><a href="#">Terms of Use</a></div>
+    </div>
+    <div class="f-social"><span></span><span></span><span></span></div>
+    <div class="f-bot">
+      <span>© 2026 Reshanti · Live 1-on-1 Yoga · reshanti.com</span>
+      <span>Find a yoga teacher online · No subscription required</span>
+    </div>
+  </div>
+</footer>
+
+<div class="panel">
+  <span class="lbl">prototype</span>
+  <button id="btnReplay">↻ Replay</button>
+  <button id="btnCalm">Reduced motion</button>
+</div>
+
+<script>
+const teachers=[
+  {n:'Amara R.',s:'Vinyasa, Hatha',l:'English, Portuguese',p:'€18'},
+  {n:'Sahar M.',s:'Hatha, Yin',l:'English, Persian',p:'€15'},
+  {n:'Katherine L.',s:'Vinyasa, Restorative',l:'English, Spanish',p:'€22'},
+  {n:'Ekta N.',s:'Ashtanga, Pranayama',l:'English, Hindi',p:'€16'}
+];
+document.getElementById('tGrid').innerHTML=teachers.map((t,i)=>`
+<article class="t-card" data-reveal="up-lg" style="--d:${i*80}ms">
+  <div class="t-photo"><span class="ryt">RYT</span><span class="inner"></span></div>
+  <div class="t-row"><span class="card-h2">${t.n}</span><span class="free-pill">First Session Free</span></div>
+  <p class="t-meta">${t.s}<br>${t.l}</p>
+  <div class="t-foot">
+    <span class="price">${t.p}<span>/session</span></span>
+    <a class="btn btn-s btn-out-green" href="#">View profile <span class="arw">→</span></a>
+  </div>
+</article>`).join('');
+
+const rows=[
+  ['Live teacher who sees you','Yes','No','No'],['Choose your teacher freely','Global browse','Yes','Limited'],
+  ['Practice in your language','Yes','No','No'],['No subscription required','Yes','Yes','Required'],
+  ['Single or weekly sessions','Yes','Limited','Limited'],['Flexible scheduling','Yes','No','No'],
+  ['Free first session','Most teachers','No','Limited'],['Choose by budget','Yes','No','No']
+];
+const tick='<svg class="tick" viewBox="0 0 24 24"><path d="M5 12.5 10 17.5 19 7"/></svg>';
+document.getElementById('cmpBody').innerHTML=rows.map(r=>`
+<tr><td>${r[0]}</td><td class="reshanti"><span class="yes">${tick}${r[1]}</span></td>
+<td class="other"><span class="no">${r[2]==='Yes'?'✓':'✗'} ${r[2]}</span></td>
+<td class="other"><span class="no">${r[3]==='Yes'?'✓':'✗'} ${r[3]}</span></td></tr>`).join('');
+
+const faqs=[
+  ['How much does a session cost?','Each teacher sets their own price, so you can choose one that fits your budget.','Prices are shown per session on each teacher profile, and you can filter by budget before booking.'],
+  ['Is Reshanti suitable for beginners?','Many teachers welcome complete beginners.','Teachers tailor each session to your level and goals, so no prior experience is needed.'],
+  ['Can I book just one session?','No subscription or long-term commitment.','You can book a single session anytime and come back whenever it suits you.'],
+  ["What if I don't like my teacher?","You're never locked into one teacher.",'Simply book your next session with a different teacher. Nothing carries over.'],
+  ['Can I keep the same weekly time slot?','Yes, with the weekly plan.','If you find a teacher you love, your sessions are booked each week automatically.'],
+  ['Why choose live 1-on-1 yoga over YouTube?',"Videos can't see you.",'A live teacher adapts the practice to your body, corrects your form, and answers your questions.']
+];
+document.getElementById('faqList').innerHTML=faqs.map(f=>`
+<div class="faq-item">
+  <button class="faq-q"><span><h3>${f[0]}</h3><p>${f[1]}</p></span><span class="faq-plus">+</span></button>
+  <div class="faq-a"><div><p class="inner">${f[2]}</p></div></div>
+</div>`).join('');
+
+const OPTS={threshold:.15,rootMargin:'0px 0px -6% 0px'};
+let observers=[];
+function mk(cb,opts=OPTS){
+  const o=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){cb(e.target);o.unobserve(e.target);}}),opts);
+  observers.push(o);return o;
+}
+function boot(){
+  observers.forEach(o=>o.disconnect());observers=[];
+  const g=mk(el=>el.classList.add('in'));
+  document.querySelectorAll('[data-reveal]').forEach(el=>g.observe(el));
+  const gr=mk(el=>el.classList.add('in'));
+  document.querySelectorAll('.q-card,.b-card,.way,.stars').forEach(el=>gr.observe(el));
+
+  mk(()=>{
+    const steps=[...document.querySelectorAll('#steps .step')];let t=0;
+    steps.forEach((s,i)=>{
+      setTimeout(()=>s.classList.add('lit'),t);t+=420;
+      if(i<steps.length-1){setTimeout(()=>s.classList.add('drawn'),t-120);t+=600;}
+    });
+    setTimeout(()=>{document.getElementById('howCta').style.opacity=1;},t+200);
+  },{threshold:.25}).observe(document.getElementById('steps'));
+
+  mk(el=>{
+    el.classList.add('in');
+    const th=document.querySelector('#compare thead th:nth-child(2)'),g=document.getElementById('colGlow');
+    const set=()=>{g.style.left=th.offsetLeft+'px';g.style.width=th.offsetWidth+'px';};
+    set();addEventListener('resize',set);
+    g.classList.add('in');
+    [...document.querySelectorAll('#cmpBody tr')].forEach((tr,i)=>setTimeout(()=>tr.classList.add('lit'),380+i*70));
+  },{threshold:.2}).observe(document.getElementById('tableWrap'));
+
+  mk(el=>el.classList.add('in'),{threshold:.2}).observe(document.getElementById('recruitGrid'));
+  mk(()=>setTimeout(()=>document.getElementById('finalCta').classList.add('pulsed'),900),{threshold:.4})
+    .observe(document.getElementById('final'));
+}
+boot();
+addEventListener('load',()=>{
+  document.querySelectorAll('#hero [data-reveal]').forEach(el=>el.classList.add('in'));
+  document.querySelector('#hero .stars').classList.add('in');
+});
+
+const nav=document.getElementById('nav');
+addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>80),{passive:true});
+const pills=document.getElementById('navPills'),ind=document.getElementById('pillInd');
+const links=[...pills.querySelectorAll('a')];
+function move(el){ind.style.width=el.offsetWidth+'px';ind.style.transform=`translateX(${el.offsetLeft}px)`}
+requestAnimationFrame(()=>move(links[0]));
+links.forEach(a=>{
+  a.addEventListener('mouseenter',()=>move(a));
+  a.addEventListener('click',()=>{links.forEach(l=>l.classList.remove('active'));a.classList.add('active')});
+});
+pills.addEventListener('mouseleave',()=>move(pills.querySelector('a.active')||links[0]));
+addEventListener('resize',()=>move(pills.querySelector('a.active')||links[0]));
+
+document.querySelectorAll('.faq-q').forEach(q=>q.addEventListener('click',()=>{
+  const item=q.parentElement,was=item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i=>i.classList.remove('open'));
+  if(!was)item.classList.add('open');
+}));
+
+document.getElementById('btnReplay').addEventListener('click',()=>{
+  document.querySelectorAll('.in').forEach(el=>el.classList.remove('in'));
+  document.querySelectorAll('.lit,.drawn,.pulsed').forEach(el=>el.classList.remove('lit','drawn','pulsed'));
+  document.getElementById('howCta').style.opacity=0;
+  scrollTo({top:0,behavior:'auto'});
+  setTimeout(()=>{boot();
+    document.querySelectorAll('#hero [data-reveal]').forEach(el=>el.classList.add('in'));
+    document.querySelector('#hero .stars').classList.add('in');},60);
+});
+const calm=document.getElementById('btnCalm');
+calm.addEventListener('click',()=>{
+  document.body.classList.toggle('calm');
+  calm.classList.toggle('on',document.body.classList.contains('calm'));
+});
+</script>
+</body>
+</html>
